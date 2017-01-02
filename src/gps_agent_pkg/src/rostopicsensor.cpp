@@ -33,7 +33,7 @@ void ROSTopicSensor::update_data_vector(const std_msgs::Float64MultiArray::Const
     }
     for (int i = 0; i < data_size_; i++)
 	{
-	    if (isnan(msg->data[i])) {
+	    if (boost::math::isnan(msg->data[i])) {
 		    ROS_ERROR("data %d is nan %e", i, msg->data[i]);
 		}
 	    latest_data_[i] = msg->data[i];

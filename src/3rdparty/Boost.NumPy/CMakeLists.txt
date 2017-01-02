@@ -11,7 +11,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/libs/numpy/cmake ${CMAKE_MODUL
 # matches the source tree.
 
 # find required python packages
-find_package(PythonLibs 2.7 REQUIRED)
+#find_package(PythonLibs 2.7 REQUIRED)
 find_package(NumPy REQUIRED)
 
 # find boost
