@@ -20,6 +20,7 @@ AGENT = {
     'smooth_noise_renormalize': True,
 }
 
+AGENT_UR_ROS = {'trial_timeout': 4 }
 
 try:
     import rospkg

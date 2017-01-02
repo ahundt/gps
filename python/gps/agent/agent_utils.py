@@ -31,7 +31,7 @@ def generate_noise(T, dU, hyperparams):
             noise = noise / np.sqrt(variance)
     return noise
 
-
+# makes a list of shallow copies of values of length n
 def setup(value, n):
     """ Go through various types of hyperparameters. """
     if not isinstance(value, list):

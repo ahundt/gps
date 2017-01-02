@@ -1,7 +1,6 @@
 """ This file defines general utility functions and classes. """
 import numpy as np
 
-
 class BundleType(object):
     """
     This class bundles many fields, similar to a record or a mutable
@@ -59,6 +58,36 @@ def finite_differences(func, inputs, func_output_shape=(), epsilon=1e-5):
         diff = (obj_d1 - obj_d2) / (2 * epsilon)
         gradient[idx] += diff
     return gradient
+
+
+def get_position(tf, target, source, time):
+    """
+    Utility function that uses tf to return the position of target
+    relative to source at time
+    tf: Object that implements TransformListener
+    target: Valid label corresponding to target link
+    source: Valid label corresponding to source link
+    time: Time given in TF's time structure of secs and nsecs
+    """
+    
+    # Calculate the quaternion data for the relative position
+    # between the target and source.
+    translation, rot = tf.lookupTransform(target, source, time)
+
+    # Get rotation and translation matrix from the quaternion data.
+    # The top left 3x3 section is a rotation matrix.
+    # The far right column is a translation vector with 1 at the bottom.
+    # The bottom row is [0 0 0 1].
+    transform = np.asmatrix(tf.fromTranslationRotation(translation, rot))
+
+    # Get position relative to source by multiplying the rotation by 
+    # the translation. The -1 is for robot matching sign conventions.
+    position = -1 * (transform[:3, 3].T * transform[:3, :3])
+
+    # Convert from np.matrix to np.array
+    position = np.asarray(position)[0][:]
+
+    return position
 
 
 def approx_equal(a, b, threshold=1e-5):
