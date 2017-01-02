@@ -1,7 +1,20 @@
 """ This file defines the main object that runs experiments. """
 
 import matplotlib as mpl
-mpl.use('Qt4Agg')
+qt_found=False
+try:
+    import PyQt4
+    mpl.use('Qt4Agg')
+    qt_found = True
+except ImportError:
+    qt_found = False
+if qt_found == False:
+    try:
+        import PyQt5
+        mpl.use('Qt5Agg')
+        qt_found = True
+    except ImportError:
+        qt_found = False
 
 import logging
 import imp
